@@ -1,11 +1,25 @@
 {
-  "name": "spec-skills-generator",
-  "owner": { "name": "byteflare-co" },
+  "name": "byteflare-skills",
+  "owner": {
+    "name": "byteflare-co"
+  },
+  "metadata": {
+    "description": "Byteflare の Claude Code プラグインコレクション"
+  },
   "plugins": [
     {
       "name": "spec-skills-generator",
-      "source": "./",
-      "description": "Auto-generate 3-layer specification documents and maintenance skills"
+      "source": "./plugins/spec-skills-generator",
+      "description": "Auto-generate 3-layer specification documents and maintenance skills for any codebase",
+      "category": "documentation",
+      "keywords": ["specification", "documentation", "spec", "code-analysis"]
+    },
+    {
+      "name": "playbook",
+      "source": "./plugins/playbook",
+      "description": "Manage and execute reusable browser automation playbooks with UI maps",
+      "category": "automation",
+      "keywords": ["playbook", "browser-automation", "ui-map", "skill"]
     }
   ]
 }

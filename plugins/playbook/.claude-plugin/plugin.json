@@ -1,0 +1,11 @@
+{
+  "name": "playbook",
+  "description": "Browser automation playbook manager. Generate UI maps, create and execute reusable browser operation playbooks with /playbook init, create, list, update, or [playbook name]",
+  "version": "1.0.0",
+  "author": {
+    "name": "byteflare-co"
+  },
+  "repository": "https://github.com/byteflare-co/byteflare-skills",
+  "license": "MIT",
+  "keywords": ["playbook", "browser-automation", "ui-map", "skill"]
+}
