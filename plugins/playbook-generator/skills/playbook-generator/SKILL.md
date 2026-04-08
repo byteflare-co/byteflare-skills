@@ -107,6 +107,13 @@ playbook スキルをどこに配置しますか？
 - このジェネレータは**テンプレートを機械的にコピーするだけ**が基本。テンプレートへの動的な置換は必要最小限に留める
 - 生成した SKILL.md はプロジェクトのリポジトリに git commit されることを前提にする
 - プラグインの更新＝テンプレートの更新なので、ユーザーは `claude plugin marketplace update byteflare-skills` 後にこのジェネレータを再実行すれば最新版に追従できる
+- **生成される playbook はブラウザ操作実行を Subagent (Sonnet) に委譲する設計**:
+  Opus セッションから `model: "sonnet"` 指定の `general-purpose` Subagent に
+  execute フローを逃がすことで、ルーチンなブラウザ操作のコスト最適化と
+  メインコンテキストの保護を両立する。詳細はテンプレート
+  (`references/playbook-skill-template.md`) の「実行：Playbook 実行フロー」
+  セクション参照。Claude Code の per-invocation `model` override 仕様
+  （https://code.claude.com/docs/en/sub-agents#choose-a-model）に依拠している
 
 ## アンチパターン
 
