@@ -1,7 +1,7 @@
 {
   "name": "playbook-generator",
   "description": "Generate a browser automation playbook skill into your project. Installs SKILL.md to .claude/skills/playbook/ (or a project-specific location) so it can be committed to git and shared with your team.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": {
     "name": "byteflare-co"
   },
