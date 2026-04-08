@@ -15,11 +15,11 @@
       "keywords": ["specification", "documentation", "spec", "code-analysis"]
     },
     {
-      "name": "playbook",
-      "source": "./plugins/playbook",
-      "description": "Manage and execute reusable browser automation playbooks with UI maps",
+      "name": "playbook-generator",
+      "source": "./plugins/playbook-generator",
+      "description": "Generate a browser automation playbook skill into your project (file-based, git-shareable)",
       "category": "automation",
-      "keywords": ["playbook", "browser-automation", "ui-map", "skill"]
+      "keywords": ["playbook", "browser-automation", "generator", "skill-installer"]
     }
   ]
 }

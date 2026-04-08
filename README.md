@@ -64,16 +64,29 @@ The skill will:
 
 ---
 
-### playbook
+### playbook-generator
 
-ブラウザ操作の手順書（Playbook）を管理・実行する統合スキル。UI Map を自動生成し、繰り返し使う操作を再利用可能な Playbook として記録・実行できる。
+playbook スキル（ブラウザ操作の手順書管理スキル）を各プロジェクトに**ファイルベースで生成**するメタスキル。spec-skills-generator と同じパターンで、生成された SKILL.md は git 管理・チーム共有が可能。
 
 **Installation:**
 ```
-/plugin install playbook@byteflare-skills
+/plugin install playbook-generator@byteflare-skills
 ```
 
-**Subcommands:**
+**Usage:**
+```
+/playbook-generator:playbook-generator
+```
+
+ジェネレータは以下を実行します:
+1. プロジェクトの CLAUDE.md・ディレクトリ構造を検出し、配置先の候補を提示
+2. `.agents/skills/playbook/` または `.claude/skills/playbook/` など、選択された場所に SKILL.md を書き出し
+3. `./.claude/playbook/` データディレクトリを初期化
+4. 必要に応じて `.gitignore` に whitelist エントリを追記
+
+**Generated skill features:**
+
+生成された playbook スキルは以下のサブコマンドを提供します:
 
 | コマンド | 説明 |
 |---------|-----|
@@ -90,13 +103,16 @@ Playbook データはプロジェクトルートの `./.claude/playbook/` に保
 - `./.claude/playbook/ui-map.md` — UI Map と Playbook の索引
 - `./.claude/playbook/[name].md` — 個別の Playbook ファイル
 
-プラグインを更新しても既存の Playbook データは影響を受けません。
+**Updating:**
 
-**Features:**
-- テキストラベル（role + name）ベースの安定した要素指定
-- 制約・制限事項の事前チェック（アンチパターン回避）
-- 公式ドキュメント参照による実行可否判断
-- ドメイン知識のインタビューで UI に現れない業務ロジックも記録
+ジェネレータのテンプレートを更新した後、各プロジェクトで再実行すれば最新の SKILL.md に追従できます:
+
+```
+/plugin marketplace update byteflare-skills
+/playbook-generator:playbook-generator
+```
+
+既存の SKILL.md と差分がある場合、diff を表示してから上書きします（バックアップ自動作成）。
 
 ---
 
