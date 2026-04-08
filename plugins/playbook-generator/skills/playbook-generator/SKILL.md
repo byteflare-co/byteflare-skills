@@ -59,27 +59,13 @@ playbook スキルをどこに配置しますか？
 2. 選択された配置先に書き込む（親ディレクトリが存在しない場合は `mkdir -p` で作成）
 3. 既存ファイルがあり上書きが選ばれた場合、事前に `.bak` サフィックスでバックアップを取る
 
-### ステップ4：データディレクトリと gitignore 整備
+生成される playbook SKILL.md は、UI Map や個別 Playbook データをスキル自身の `references/` サブディレクトリ（例: `.agents/skills/playbook/references/`）に保存する設計。スキル本体とデータが同じ場所にあるため、配置先のディレクトリが git 管理されていれば自動的にチーム共有できる（`.gitignore` の追加調整は不要）。
 
-1. **データディレクトリ作成**
-   - `./.claude/playbook/` を `mkdir -p` で作成（空ディレクトリのまま）
-   - 既に存在する場合はスキップ
-   - `~/dev/byteflare-co/claude-skills/` 等ユーザーレベル配置の場合は、プロジェクトごとのデータなのでプロジェクト側に `./.claude/playbook/` を作成
+### ステップ4：配置先の git 管理状態を確認
 
-2. **.gitignore の whitelist 調整**
-   - プロジェクトルートの `.gitignore` を確認する
-   - `.claude/*` または `.claude/**` が ignore されている場合、playbook データを git 管理するため、以下のエントリを追記する:
-     ```
-     !.claude/playbook/
-     !.claude/playbook/**
-     ```
-   - 追記位置は既存の `.claude/skills` などの whitelist エントリの直後が望ましい
-   - 既に whitelist エントリがある場合はスキップ
-   - `.gitignore` 自体が存在しない場合はスキップ
-
-3. **`.agents/skills/` に配置した場合**
-   - 通常 `.agents/skills/**` は whitelist されていることが多いが、念のため確認する
-   - されていなければユーザーに通知する（この場合は symlink-skills スキルの利用を促す）
+1. 選択された配置先が git 管理対象か確認する（`git check-ignore <path>` で ignore されていないか確認）
+2. ignore されている場合はユーザーに通知し、`.gitignore` の whitelist 追加を提案する
+3. `.agents/skills/` に配置した場合は、プロジェクトで symlink-skills 方式が使われているか確認する。`.claude/skills` が `.agents/skills` への symlink になっていない場合は、その旨を通知する
 
 ### ステップ5：完了レポート
 
@@ -90,11 +76,7 @@ playbook スキルをどこに配置しますか？
 
 📂 配置先:
   SKILL.md: <パス>
-  データディレクトリ: ./.claude/playbook/
-
-🔧 gitignore 調整:
-  - [ 追記 / スキップ ] !.claude/playbook/
-  - [ 追記 / スキップ ] !.claude/playbook/**
+  データ保存場所: <パス>/references/
 
 🚀 使い方:
   /playbook init [URL]   - 対象プロダクトを巡回して UI Map を生成
@@ -104,7 +86,7 @@ playbook スキルをどこに配置しますか？
   /playbook update       - Playbook を更新
 
 📝 次のアクション:
-  - チームに共有する場合: `git add <配置先> .gitignore && git commit`
+  - チームに共有する場合: `git add <配置先ディレクトリ> && git commit`
   - すぐ使う場合: `/playbook init https://example.com`
 ```
 
