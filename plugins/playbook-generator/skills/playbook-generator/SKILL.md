@@ -146,10 +146,13 @@ playbook スキルを導入しました
 - このジェネレータは**テンプレートディレクトリを配置先にコピーする**のが基本。テンプレートへの動的な置換は必要最小限に留める
 - 生成したファイル群はプロジェクトのリポジトリに git commit されることを前提にする
 - プラグインの更新＝テンプレートの更新なので、ユーザーは `npx skills update playbook-generator` 後にこのジェネレータを再実行すれば最新版に追従できる
-- **生成される playbook はブラウザ操作実行を Subagent (Sonnet) に委譲する設計**:
-  Opus セッションから `model: "sonnet"` 指定の `general-purpose` Subagent に
-  execute / create / resync フローを逃がすことで、ルーチンなブラウザ操作のコスト最適化と
-  メインコンテキストの保護を両立する。詳細はテンプレートの SKILL.md「Dispatch contract」参照。
+- **生成される playbook は execute 実行モードを動的に選ぶ設計**:
+  `init` / `list` / `update` はインライン固定、`create` / `resync` は Sonnet Subagent 固定。
+  `execute` のみ invocation ごとに「インライン vs Sonnet Subagent」を決定する。
+  判定優先度は (1) ユーザー文言（「見ながら」「バックグラウンドで」等）→ (2) Playbook frontmatter
+  の `execution_mode` → (3) ヒューリスティック（見積もり agent-browser 往復 ≤ 12 ならインライン）。
+  短い読み取り系はインラインで進捗可視化、長い/多ターゲット系は Subagent に逃がしてメインコンテキストを保護する。
+  詳細はテンプレートの SKILL.md「Execute dispatch decision」および「Dispatch contract」参照。
   Claude Code の per-invocation `model` override 仕様
   （https://code.claude.com/docs/en/sub-agents#choose-a-model）に依拠している
 
